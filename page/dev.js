@@ -157,5 +157,8 @@ function update_dev_info()
 }
 
 function switch_mode() {
-    $.get("/restart/switch_mode", function (d) { if (d != null) alert(ALERT_SWITCH_MODE); });
+    $.get("/restart/switch_mode", function (d) { 
+	if (d != null) 
+	alert(ALERT_SWITCH_MODE); 
+});
 }
