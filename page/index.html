@@ -1,0 +1,86 @@
+﻿<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<script src="./js/jquery.js"></script>
+		<script src="./js/jquery.cookie.js"></script>
+		<script src="./js/jquery.z.js"></script>
+		<script src="./js/jsrender.min.js"></script>
+
+		<script src="pool.js"></script>
+		<script src="addr.js"></script>
+		<script src="api.js"></script>
+		<script src="dev.js"></script>
+	
+		<link rel="stylesheet" type="text/css" href="./css/pools.css" />
+
+		<script>
+			var ccbmc = { 
+				C_LANG:"ccbmc-page-lang", 
+				C_TMPL_PATH:"./tmpl/",
+				C_JS_PATH:"./js/",
+				lang: "enUS"
+			};
+			$(document).ready(function() { chooseLanguage(); loadPage(); });
+			function chooseLanguage(l)
+			{
+				var oldLang = $.cookie(ccbmc.C_LANG);
+				if (oldLang == null || oldLang == "") oldLang = ccbmc.lang;
+				if (null == l || "" == l) $.cookie(ccbmc.C_LANG, oldLang);
+				else $.cookie(ccbmc.C_LANG, l);
+				ccbmc.lang = $.cookie(ccbmc.C_LANG);
+			}
+
+			function switchLang(l)
+			{
+				chooseLanguage(l);
+				window.location.reload();
+			}
+
+			function loadPage()
+			{
+				var suffix = ccbmc.lang;
+
+				var tmpl;
+
+				tmpl = ccbmc.C_TMPL_PATH + ["pools", suffix, "jsrender"].join(".");
+				$.syncGet(tmpl, function(d) { $("#c_pools").html(d) } );
+
+				tmpl = ccbmc.C_TMPL_PATH + ["addr", suffix, "jsrender"].join(".");
+				$.syncGet(tmpl, function(d) { $("#c_addr").html(d) } );
+
+
+				load_pool_config();
+				load_addr_config();
+				loop_dev_info();
+				loop_pool_status();
+			}
+
+		</script>
+
+        <title>Bitcrane Web Interface</title>
+	</head>
+
+
+	<body>
+		<h1 ><div id="c_header" style="magin:0 auto; text-align:center; background: url(./imgs/title.jpg); width:1366px; height:157px;" >
+		<div style="margin-right:25; margin-top:25 ; font-size:12px;text-align:center; color: white; display: block; float:right;">
+			<a href="#" onclick="switchLang('enUS');" style="color:white;">English</a>
+			<a href="#" onclick="switchLang('zhCN');" style="color:white;">简体中文</a>
+		</div>
+		<div style="clear:both; width:0px; height:0px;"></div>
+
+
+</div></h1>
+		<div id="c_settings">
+			<div id="c_dev"></div>
+			<div style="height:20px;"></div>
+			<div id="c_pool_status"></div>
+			<div style="height20px;"></div>
+			<div id="c_pools"></div>
+			<div id="c_addr"></div>
+		</div>
+	</body>
+
+</html>
+
+

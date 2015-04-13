@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>Ping test</title>
+<script src="js/jquery.js" ></script>
+<script src="js/jquery.z.js" ></script>
+<script>
+var ping = false;
+var tried = 0;
+
+function getResult()
+{
+	if (ping) {
+		++tried;
+		if (tried >= 60) {
+			ping = false;
+			tried = 0;
+		}
+		$.syncGet("/sf/test/ping.txt", function(d) {
+				if (d != null && d != $("#pingResult").val()) {
+				$("#pingResult").val(d);
+				}
+				});
+	}
+	setTimeout(getResult, 1000);
+}
+
+function doPing()
+{
+	var addr = $("#addr").val();
+	addr = $.trim(addr);
+	if (addr == "") {
+		return;
+	}
+	$.post("/config/ping.config.json", { addr: addr }, function(d) { 
+			$.syncGet("/restart/ping", function(d) {
+				if (d != null) 
+				ping = true;
+                                tried = 0;
+				});
+			} );
+}
+
+$(document).ready(getResult);
+
+</script>
+</head>
+<body>
+<div style="width:100%;height:100%;">
+<table>
+<tr>
+<td>
+<input type="button" value="ping" onclick="doPing();" />
+<input type="text" id="addr" list="poorServers" />
+</td>
+</tr>
+<tr>
+<td>Last ping result:</td>
+</tr>
+<tr>
+<td colspan="2">
+<textarea id="pingResult" style="width:400px; height:600px;">
+</textarea>
+</td>
+</tr>
+</table>
+<datalist id="poorServers">
+<option value="www.163.com" />
+<option value="www.baidu.com" />
+</datalist>
+</div>
+</body>
+</html>
