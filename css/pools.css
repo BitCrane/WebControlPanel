@@ -15,6 +15,25 @@ input text
 	border: 1px solid green;
 }
 
+td { 
+	color:blue;
+	font-family:verdana,arial,sans;
+	font-size:14pt
+}
+
+td.h {
+	color:blue;
+	font-family:verdana,arial,sans;
+	font-size:14pt;
+	background:#d0ffff
+}
+
+td.sta {
+	color:green;
+	font-family:verdana,arial,sans;
+	font-size:14pt;
+}
+
 .pool-block
 {
 	width:1299;

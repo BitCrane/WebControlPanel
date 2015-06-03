@@ -10,7 +10,7 @@ $here = $_SERVER['PHP_SELF'];
 ?>
 <html>
 <head>
-<title>Mine</title>
+<title>BitCrane Miner Control Panel</title>
 <meta http-equiv-"content-type" content="text/html"; charset="UTF-8"; />
 <link rel="stylesheet" type="text/css" href="./css/pools.css" />
 
@@ -26,7 +26,7 @@ function prs(a){var c=a.substr(3);var z=c.split('|',2);var m=z[0].substr(0,1).to
 <div id="c_header" style="margin:0 auto; test-align:center; background: url(./imgs/title.jpg); width:1366px; height:157px;"></div>
 </h1>
 <?php 
- echo '<tr><td colspan=2 class=sta>Date: '.date('H:i:s j-M-Y \U\T\CP').'</td></tr>';
+ echo '<tr><td class=sta>Date: '.date('H:i:s j-M-Y \U\T\CP').'</td></tr>';
 ?>
 <table border=0 cellpadding=4 cellspacing=0 summary='Mine'>
 
@@ -170,7 +170,7 @@ function details($list)
 		{
 			if ($name == '0')
 				$name = '&nbsp;';
-			echo "<td valign=bottom>$name</td>";
+			echo "<td valign=bottom class=h>$name</td>";
 		}
 		echo '</tr>';
 		break;
@@ -268,7 +268,7 @@ function display()
  # if ($arg != null and $arg != '')
  #	process(array($arg => $arg), $rd, $ro);
  $cmds = array(
-		'summary' => 'summary information',
+		'lcd' => 'summary information',
 		'edevs'    => 'device list',
 		'pools'   => 'pool list');
  process($cmds, $rd, $ro);
