@@ -165,7 +165,7 @@ function getparam($name, $both = false)
  return substr($a, 0, 1024);
 }
 #
-function details($list)
+function details($cmd, $list)
 {
  $stas = array('S' => 'Success', 'W' => 'Warning', 'I' => 'Informational', 'E' => 'Error', 'F' => 'Fatal');
  $tb = '<tr><td><table border=1 cellpadding=5 cellspacing=0>';
@@ -193,6 +193,9 @@ function details($list)
 				$name = '&nbsp;';
 			echo "<td valign=bottom class=h>$name</td>";
 		}
+		
+		if ($cmd == 'pools')
+			echo "<td valign=bottom class=h>Switch Pool</td>";
 		echo '</tr>';
 		break;
 	}
@@ -201,9 +204,25 @@ function details($list)
  {
 	if ($item == 'STATUS')
 		continue;
+
 	foreach ($values as $name => $value)
 	echo "<td>$value</td>";
+	
+	if ($cmd == 'pools')
+	{
+		echo '<td>';
+
+		reset($values);
+		$pool = current($values);
+		if ($pool ===false)
+			echo '&nbsp;';
+		else
+		{
+			echo "<input type=button value='Pool $pool' onclick='prc(\"switchpool|$pool\",\"Switch to Pool $pool\")'>";
+		}
+
 	echo '</tr>';
+	}
  }
  echo $te;
 }
@@ -222,7 +241,7 @@ function process($cmds, $rd, $ro)
 	}
 	else
 	{
-		details($process);
+		details($cmd,$process);
 		echo '<tr><td><br><br></td></tr>';
 	}
  }
