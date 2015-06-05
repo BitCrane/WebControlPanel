@@ -203,52 +203,6 @@ function details($list)
  echo $te;
 }
 #
-function gpubuttons($count)
-{
- $tb = '<tr><td><table border=1 cellpadding=5 cellspacing=0>';
- $te = '</table></td></tr>';
- echo $tb.'<tr>';
- for ($i = 0; $i < 4; $i++)
- {
-	echo '<td>';
-	if ($i == 0)
-		echo 'GPU';
-	else
-		echo '&nbsp;';
-	echo '</td>';
- }
- for ($c = 0; $c < $count; $c++)
- {
-	echo '</tr><tr>';
-	echo "<td>$c</td>";
-	echo "<td><input type=button value='Enable $c' onclick='prs(\"gpuenable|$c\")'></td>";
-	echo "<td><input type=button value='Disable $c' onclick='prs(\"gpudisable|$c\")'></td>";
-	echo "<td><input type=button value='Restart $c' onclick='prs(\"gpurestart|$c\")'></td>";
- }
- echo '</tr>'.$te;
-}
-#
-function processgpus($rd, $ro)
-{
- global $error;
- $gpus = api('gpucount');
- if ($error != null)
-	echo '<tr><td>Error getting GPU count: '.$rd.$error.$ro.'</td></tr>';
- else
- {
-	if (!isset($gpus['GPUS']['Count']))
-		echo '<tr><td>No GPU count returned: '.$rd.$gpus['STATUS']['STATUS'].' '.$gpus['STATUS']['Msg'].$ro.'</td></tr>';
-	else
-	{
-		$count = $gpus['GPUS']['Count'];
-		if ($count == 0)
-			echo '<tr><td>No GPUs</td></tr>';
-		else
-			gpubuttons($count);
-	}
- }
-}
-#
 function process($cmds, $rd, $ro)
 {
  global $error;
