@@ -19,9 +19,14 @@ $here = $_SERVER['PHP_SELF'];
 //PageRefreash function
 function pr(a,m){
 	if(m!=null){
-		if(!confirm(m+'?'))return
+		if(!confirm(m+'?'))
+		return
 	}
 	window.location="<?php echo $here ?>"+a
+}
+
+function prc(a,m){
+	pr('?arg='+a,m)
 }
 
 function prs(a){
@@ -34,17 +39,17 @@ function prs(a){
 </script>
 
 </head>
-<body bgcolor=#ecffff>
+<body>
 
 <h1>
-<div id="c_header" style="margin:0 auto; test-align:center; background: url(./imgs/title.jpg); width:1366px; height:157px;"></div>
+<div id="c_header" style="margin:0 auto; text-align:center; background: url(./imgs/title.jpg); width:1366px; height:157px;"></div>
 </h1>
 
 <?php 
- echo '<tr><td class=sta>Date: '.date('H:i:s j-M-Y \U\T\CP').'</td></tr>';
+ echo '<div class=sta style="text-align:center">Date: '.date('H:i:s j-M-Y \U\T\CP').'</div>';
 ?>
 
-<table border=0 cellpadding=4 cellspacing=0 summary='Mine'>
+<table border=0 cellpadding=5 cellspacing=0 summary='Mine'>
 
 <?php
 
@@ -197,7 +202,7 @@ function details($list)
 	if ($item == 'STATUS')
 		continue;
 	foreach ($values as $name => $value)
-		echo "<td>$value</td>";
+	echo "<td>$value</td>";
 	echo '</tr>';
  }
  echo $te;
@@ -232,7 +237,7 @@ function display()
  echo "<tr><td><table cellpadding=0 cellspacing=0 border=0><tr><td>";
  echo "<input type=button value='Refresh' onclick='pr(\"\",null)'>";
  echo "</td><td width=100%>&nbsp;</td><td>";
- echo "<input type=button value='Quit' onclick='pr(\"?arg=quit\",\"Quit CGMiner\")'>";
+ echo "<input type=button value='Quit' onclick='prc(\"quit\",\"Quit CGMiner\")'>";
  echo "</td></tr></table></td></tr>";
  $arg = trim(getparam('arg', true));
  if ($arg != null and $arg != '')
@@ -240,10 +245,9 @@ function display()
  $cmds = array(
 		'lcd' => 'summary information',
 		'edevs'    => 'device list',
-		'pools'   => 'pool list');
+		'pools'   => 'pool list',
+		'config' => 'cgminer config');
  process($cmds, $rd, $ro);
-# if ($error == null)
-#	processgpus($rd, $ro);
 }
 #
 display();
