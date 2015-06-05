@@ -1,12 +1,12 @@
 <?php
 session_start();
-#
+
 global $miner, $port;
 $miner = '127.0.0.1'; # hostname or IP address
 $port = 4028;
-#
+
 $here = $_SERVER['PHP_SELF'];
-#
+
 ?>
 <html>
 <head>
@@ -15,8 +15,22 @@ $here = $_SERVER['PHP_SELF'];
 <link rel="stylesheet" type="text/css" href="./css/pools.css" />
 
 <script type='text/javascript'>
-function pr(a,m){if(m!=null){if(!confirm(m+'?'))return}window.location="<?php echo $here ?>"+a}
-function prs(a){var c=a.substr(3);var z=c.split('|',2);var m=z[0].substr(0,1).toUpperCase()+z[0].substr(1)+' GPU '+z[1];pr('?arg='+a,m)}
+
+//PageRefreash function
+function pr(a,m){
+	if(m!=null){
+		if(!confirm(m+'?'))return
+	}
+	window.location="<?php echo $here ?>"+a
+}
+
+function prs(a){
+	var c=a.substr(3);
+	var z=c.split('|',2);
+	var m=z[0].substr(0,1).toUpperCase()+z[0].substr(1)+' GPU '+z[1];
+	pr('?arg='+a,m)
+}
+
 </script>
 
 </head>
@@ -25,16 +39,18 @@ function prs(a){var c=a.substr(3);var z=c.split('|',2);var m=z[0].substr(0,1).to
 <h1>
 <div id="c_header" style="margin:0 auto; test-align:center; background: url(./imgs/title.jpg); width:1366px; height:157px;"></div>
 </h1>
+
 <?php 
  echo '<tr><td class=sta>Date: '.date('H:i:s j-M-Y \U\T\CP').'</td></tr>';
 ?>
+
 <table border=0 cellpadding=4 cellspacing=0 summary='Mine'>
 
 <?php
-#
+
 global $error;
 $error = null;
-#
+
 function getsock($addr, $port)
 {
  global $error;
@@ -264,9 +280,9 @@ function display()
  echo "</td><td width=100%>&nbsp;</td><td>";
  echo "<input type=button value='Quit' onclick='pr(\"?arg=quit\",\"Quit CGMiner\")'>";
  echo "</td></tr></table></td></tr>";
- # $arg = trim(getparam('arg', true));
- # if ($arg != null and $arg != '')
- #	process(array($arg => $arg), $rd, $ro);
+ $arg = trim(getparam('arg', true));
+ if ($arg != null and $arg != '')
+	process(array($arg => $arg), $rd, $ro);
  $cmds = array(
 		'lcd' => 'summary information',
 		'edevs'    => 'device list',
@@ -279,6 +295,7 @@ function display()
 display();
 #
 ?>
+
 </table>
 </body>
 </html>
