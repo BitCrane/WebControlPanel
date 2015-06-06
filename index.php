@@ -26,7 +26,7 @@ function pr(a,m){
 }
 
 function prc(a,m){
-	pr('?arg='+a,m)
+	pr('?arg='+a,m);
 }
 
 function prs(a){
@@ -168,10 +168,13 @@ function getparam($name, $both = false)
 function details($cmd, $list)
 {
  $stas = array('S' => 'Success', 'W' => 'Warning', 'I' => 'Informational', 'E' => 'Error', 'F' => 'Fatal');
+
  $tb = '<tr><td><table border=1 cellpadding=5 cellspacing=0>';
  $te = '</table></td></tr>';
+
  echo $tb;
  echo $te.$tb;
+
  if (isset($list['STATUS']))
  {
 	echo '<tr>';
@@ -181,7 +184,13 @@ function details($cmd, $list)
 	echo '<td>Message: '.$list['STATUS']['Msg'].'</td>';
 	echo '</tr>';
  }
+
  echo $te.$tb;
+
+$poolcmd = array (	'Switch to'  =>  'switchpool',
+			'Enable'     =>  'enablepool',
+			'disable'    =>  'disablepool');
+
  foreach ($list as $item => $values)
  {
 	if ($item != 'STATUS')
@@ -195,8 +204,10 @@ function details($cmd, $list)
 		}
 		
 		if ($cmd == 'pools')
-			echo "<td valign=bottom class=h>Switch Pool</td>";
+			foreach ($poolcmd as $name => $pcmd)
+				echo "<td valign=bottom class=h>$name</td>";
 		echo '</tr>';
+
 		break;
 	}
  }
@@ -204,26 +215,37 @@ function details($cmd, $list)
  {
 	if ($item == 'STATUS')
 		continue;
+		
+	echo '<tr>';
 
 	foreach ($values as $name => $value)
 	echo "<td>$value</td>";
 	
 	if ($cmd == 'pools')
 	{
-		echo '<td>';
 
 		reset($values);
 		$pool = current($values);
-		if ($pool ===false)
-			echo '&nbsp;';
-		else
+
+		foreach ($poolcmd as $name => $pcmd)
 		{
-			echo "<input type=button value='Pool $pool' onclick='prc(\"switchpool|$pool\",\"Switch to Pool $pool\")'>";
+			echo "<td>";
+			if ($pool ===false)
+				echo '&nbsp;';
+			else
+			{
+				echo "<input type=button value='Pool $pool'";
+				echo " onclick='prc(\"$pcmd|$pool\",\"$name Pool $pool\")'>";
+			}
+			echo '</td>';
 		}
 
-	echo '</tr>';
 	}
- }
+
+
+	echo '</tr>';
+
+}
  echo $te;
 }
 #
